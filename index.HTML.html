@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>免費雲端音樂播放器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .player-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        audio {
+            width: 100%;
+            margin: 20px 0;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #file-input {
+            display: none;
+        }
+        .file-upload-label {
+            display: inline-block;
+            background: #2196F3;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .file-upload-label:hover {
+            background: #0b7dda;
+        }
+        #playlist {
+            text-align: left;
+            margin-top: 20px;
+        }
+        #playlist li {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
+        #playlist li:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="player-container">
+        <h1>免費雲端音樂播放器</h1>
+        
+        <audio id="audio-player" controls></audio>
+        
+        <div class="controls">
+            <button id="prev-btn">上一首</button>
+            <button id="play-btn">播放</button>
+            <button id="pause-btn">暫停</button>
+            <button id="next-btn">下一首</button>
+        </div>
+        
+        <label for="file-input" class="file-upload-label">上傳音樂</label>
+        <input type="file" id="file-input" accept="audio/*" multiple>
+        
+        <ul id="playlist"></ul>
+    </div>
+
+    <script>
+        const audioPlayer = document.getElementById("audio-player");
+        const playBtn = document.getElementById("play-btn");
+        const pauseBtn = document.getElementById("pause-btn");
+        const prevBtn = document.getElementById("prev-btn");
+        const nextBtn = document.getElementById("next-btn");
+        const fileInput = document.getElementById("file-input");
+        const playlist = document.getElementById("playlist");
+        
+        let currentTrackIndex = 0;
+        let tracks = [];
+        
+        // 上傳音樂
+        fileInput.addEventListener("change", (e) => {
+            const files = e.target.files;
+            if (files.length > 0) {
+                tracks = [...files];
+                currentTrackIndex = 0;
+                updatePlaylist();
+                playTrack(currentTrackIndex);
+            }
+        });
+        
+        // 播放音樂
+        function playTrack(index) {
+            if (tracks.length === 0) return;
+            
+            const track = tracks[index];
+            const trackURL = URL.createObjectURL(track);
+            audioPlayer.src = trackURL;
+            audioPlayer.play();
+            
+            // 更新播放列表高亮
+            const playlistItems = playlist.querySelectorAll("li");
+            playlistItems.forEach((item, i) => {
+                if (i === index) {
+                    item.style.background = "#e0e0e0";
+                } else {
+                    item.style.background = "transparent";
+                }
+            });
+        }
+        
+        // 更新播放列表
+        function updatePlaylist() {
+            playlist.innerHTML = "";
+            tracks.forEach((track, index) => {
+                const li = document.createElement("li");
+                li.textContent = track.name;
+                li.addEventListener("click", () => {
+                    currentTrackIndex = index;
+                    playTrack(currentTrackIndex);
+                });
+                playlist.appendChild(li);
+            });
+        }
+        
+        // 播放按鈕
+        playBtn.addEventListener("click", () => {
+            if (tracks.length > 0) {
+                audioPlayer.play();
+            }
+        });
+        
+        // 暫停按鈕
+        pauseBtn.addEventListener("click", () => {
+            audioPlayer.pause();
+        });
+        
+        // 上一首
+        prevBtn.addEventListener("click", () => {
+            if (tracks.length === 0) return;
+            
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+            playTrack(currentTrackIndex);
+        });
+        
+        // 下一首
+        nextBtn.addEventListener("click", () => {
+            if (tracks.length === 0) return;
+            
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            playTrack(currentTrackIndex);
+        });
+        
+        // 自動下一首
+        audioPlayer.addEventListener("ended", () => {
+            nextBtn.click();
+        });
+    </script>
+</body>
+</html>
