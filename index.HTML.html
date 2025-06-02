@@ -1,77 +1,144 @@
 <!DOCTYPE html>
 <html lang="zh-HK">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>免費雲端音樂播放器</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
-        .player-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
-        }
-        h2 {
-            margin-top: 40px;
-            margin-bottom: 10px;
-            color: #555;
-        }
-        audio {
-            width: 100%;
-            margin: 10px 0 30px 0;
-        }
-        /* 爆炸備援字效果 */
-        .fallback-warning {
-            color: red;
-            font-weight: bold;
-            animation: flash 1s infinite;
-            font-size: 18px;
-            margin-top: 10px;
-        }
-        @keyframes flash {
-            0%, 50%, 100% { opacity: 1; }
-            25%, 75% { opacity: 0; }
-        }
-        .fallback-warning .highlight {
-            color: orange;
-            text-shadow: 0 0 5px yellow;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>免費雲端音樂播放器</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: #fff;
+    }
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      z-index: -1;
+    }
+    .player-container {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      margin: 100px auto;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+    h1 {
+      color: #FF8C00; /* 橙色 */
+      margin-bottom: 30px;
+      font-size: 30px;
+    }
+    h2 {
+      margin-top: 40px;
+      margin-bottom: 10px;
+      color: #FF7F50;
+      font-size: 22px;
+    }
+    audio {
+      width: 100%;
+      margin: 10px 0 30px 0;
+    }
+    /* 爆炸備援字效果 */
+    .fallback-warning {
+      color: #FF4500;
+      font-weight: bold;
+      animation: flash 1s infinite;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+    @keyframes flash {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0; }
+    }
+    .fallback-warning .highlight {
+      color: #FFA500;
+      text-shadow: 0 0 5px #FFD700;
+    }
+  </style>
 </head>
 <body>
-    <div class="player-container">
-        <h1>免費雲端音樂播放器</h1>
+  <!-- 粒子背景 -->
+  <div id="particles-js"></div>
 
-        <h2>TS Song Remix 1.0</h2>
-        <audio controls>
-            <source src="TS%20Song%20Remix%201.0.mp3" type="audio/mpeg">
-            <div class="fallback-warning">
-                🚫💥 <strong>重大警告！</strong> 您的瀏覽器竟然無法播放音樂！<br>
-                <strong>請即刻升級</strong>，否則將錯過前所未有的 <span class="highlight">聽覺震撼！</span> 🎧
-            </div>
-        </audio>
+  <div class="player-container">
+    <h1>免費雲端音樂播放器</h1>
 
-        <h2>TS Song Remix 2.0</h2>
-        <audio controls>
-            <source src="TS%20Song%20Remix%202.0.mp3" type="audio/mpeg">
-            <div class="fallback-warning">
-                🚫💥 <strong>重大警告！</strong> 您的瀏覽器竟然無法播放音樂！<br>
-                <strong>請即刻升級</strong>，否則將錯過前所未有的 <span class="highlight">聽覺震撼！</span> 🎧
-            </div>
-        </audio>
-    </div>
+    <h2>TS Song Remix 1.0</h2>
+    <audio controls>
+      <source src="TS%20Song%20Remix%201.0.mp3" type="audio/mpeg">
+      <div class="fallback-warning">
+        🚫💥 <strong>重大警告！</strong> 您的瀏覽器竟然無法播放音樂！<br>
+        <strong>請即刻升級</strong>，否則將錯過前所未有的 <span class="highlight">聽覺震撼！</span> 🎧
+      </div>
+    </audio>
+
+    <h2>TS Song Remix 2.0</h2>
+    <audio controls>
+      <source src="TS%20Song%20Remix%202.0.mp3" type="audio/mpeg">
+      <div class="fallback-warning">
+        🚫💥 <strong>重大警告！</strong> 您的瀏覽器竟然無法播放音樂！<br>
+        <strong>請即刻升級</strong>，否則將錯過前所未有的 <span class="highlight">聽覺震撼！</span> 🎧
+      </div>
+    </audio>
+  </div>
+
+  <!-- 引用Particles.js -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {
+          "value": 50,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "shape": {
+          "type": "image",
+          "image": {
+            "src": "orange-icon.png",  // 您上傳的柑橘小icon
+            "width": 50,
+            "height": 50
+          }
+        },
+        "size": {
+          "value": 20,
+          "random": true
+        },
+        "move": {
+          "enable": true,
+          "speed": 2,
+          "direction": "none",
+          "random": true,
+          "straight": false,
+          "out_mode": "out"
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          },
+          "resize": true
+        }
+      },
+      "retina_detect": true
+    });
+  </script>
 </body>
 </html>
