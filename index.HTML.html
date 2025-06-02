@@ -1,11 +1,77 @@
-<h2>Sunset Vibes</h2>
-<audio controls>
-  <source src="TS Song Remix 1.0.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>免費雲端音樂播放器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .player-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        h2 {
+            margin-top: 40px;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        audio {
+            width: 100%;
+            margin: 10px 0 30px 0;
+        }
+        /* 爆炸備援字效果 */
+        .fallback-warning {
+            color: red;
+            font-weight: bold;
+            animation: flash 1s infinite;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        @keyframes flash {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0; }
+        }
+        .fallback-warning .highlight {
+            color: orange;
+            text-shadow: 0 0 5px yellow;
+        }
+    </style>
+</head>
+<body>
+    <div class="player-container">
+        <h1>免費雲端音樂播放器</h1>
 
-<h2>Morning Breeze</h2>
-<audio controls>
-  <source src="TS Song Remix 2.0.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
+        <h2>TS Song Remix 1.0</h2>
+        <audio controls>
+            <source src="TS%20Song%20Remix%201.0.mp3" type="audio/mpeg">
+            <div class="fallback-warning">
+                🚫💥 <strong>重大警告！</strong> 您的瀏覽器竟然無法播放音樂！<br>
+                <strong>請即刻升級</strong>，否則將錯過前所未有的 <span class="highlight">聽覺震撼！</span> 🎧
+            </div>
+        </audio>
+
+        <h2>TS Song Remix 2.0</h2>
+        <audio controls>
+            <source src="TS%20Song%20Remix%202.0.mp3" type="audio/mpeg">
+            <div class="fallback-warning">
+                🚫💥 <strong>重大警告！</strong> 您的瀏覽器竟然無法播放音樂！<br>
+                <strong>請即刻升級</strong>，否則將錯過前所未有的 <span class="highlight">聽覺震撼！</span> 🎧
+            </div>
+        </audio>
+    </div>
+</body>
+</html>
