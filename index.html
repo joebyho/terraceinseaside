@@ -36,13 +36,25 @@
       margin-bottom: 30px;
       font-size: 30px;
     }
-    /* 爆炸備援字效果 */
+    #start-button {
+      background-color: #FFA500;
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      font-size: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #start-button:hover {
+      background-color: #FF8C00;
+    }
     .fallback-warning {
       color: #FF4500;
       font-weight: bold;
       animation: flash 1s infinite;
       font-size: 18px;
-      margin-top: 10px;
+      margin-top: 30px;
     }
     @keyframes flash {
       0%, 50%, 100% { opacity: 1; }
@@ -61,13 +73,16 @@
   <div class="player-container">
     <h1>免費雲端音樂播放器</h1>
 
-    <audio id="audio-player" autoplay></audio>
+    <button id="start-button">▶️ 開始播放</button>
 
     <div class="fallback-warning">
       🚫💥 <strong>重大警告！</strong> 您的瀏覽器竟然無法播放音樂！<br>
       <strong>請即刻升級</strong>，否則將錯過前所未有的 <span class="highlight">聽覺震撼！</span> 🎧
     </div>
   </div>
+
+  <!-- 音樂播放器 (隱藏) -->
+  <audio id="audio-player" style="display:none;"></audio>
 
   <!-- 引用Particles.js -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
@@ -86,7 +101,7 @@
       "retina_detect": true
     });
 
-    // 自動連播+循環Playlist
+    // Playlist設定 (改咗正確Encoding名)
     const playlist = [
       "TS%20Song%20Remix%201.0%20%281%29.mp3",
       "TS%20Song%20Remix%202.0%20%281%29.mp3"
@@ -100,15 +115,18 @@
       audioPlayer.play();
     }
 
-    audioPlayer.addEventListener('ended', () => {
-      currentTrack = (currentTrack + 1) % playlist.length; // Loop番頭
+    // 撳掣後啟動播放
+    document.getElementById('start-button').addEventListener('click', () => {
       playTrack(currentTrack);
+      document.getElementById('start-button').style.display = 'none'; // 撳完掣收埋
     });
 
-    // 網頁一Load即開始
-    window.onload = function() {
+    // 播完自動跳下一首，無限Loop
+    audioPlayer.addEventListener('ended', () => {
+      currentTrack = (currentTrack + 1) % playlist.length;
       playTrack(currentTrack);
-    };
+    });
   </script>
 </body>
 </html>
+
