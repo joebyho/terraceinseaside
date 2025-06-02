@@ -32,19 +32,9 @@
       text-align: center;
     }
     h1 {
-      color: #FF8C00; /* 橙色 */
+      color: #FF8C00;
       margin-bottom: 30px;
       font-size: 30px;
-    }
-    h2 {
-      margin-top: 40px;
-      margin-bottom: 10px;
-      color: #FF7F50;
-      font-size: 22px;
-    }
-    audio {
-      width: 100%;
-      margin: 10px 0 30px 0;
     }
     /* 爆炸備援字效果 */
     .fallback-warning {
@@ -71,23 +61,12 @@
   <div class="player-container">
     <h1>免費雲端音樂播放器</h1>
 
-    <h2>TS Song Remix 1.0</h2>
-    <audio controls>
-      <source src="TS%20Song%20Remix%201.0.mp3" type="audio/mpeg">
-      <div class="fallback-warning">
-        🚫💥 <strong>重大警告！</strong> 您的瀏覽器竟然無法播放音樂！<br>
-        <strong>請即刻升級</strong>，否則將錯過前所未有的 <span class="highlight">聽覺震撼！</span> 🎧
-      </div>
-    </audio>
+    <audio id="audio-player" autoplay></audio>
 
-    <h2>TS Song Remix 2.0</h2>
-    <audio controls>
-      <source src="TS%20Song%20Remix%202.0.mp3" type="audio/mpeg">
-      <div class="fallback-warning">
-        🚫💥 <strong>重大警告！</strong> 您的瀏覽器竟然無法播放音樂！<br>
-        <strong>請即刻升級</strong>，否則將錯過前所未有的 <span class="highlight">聽覺震撼！</span> 🎧
-      </div>
-    </audio>
+    <div class="fallback-warning">
+      🚫💥 <strong>重大警告！</strong> 您的瀏覽器竟然無法播放音樂！<br>
+      <strong>請即刻升級</strong>，否則將錯過前所未有的 <span class="highlight">聽覺震撼！</span> 🎧
+    </div>
   </div>
 
   <!-- 引用Particles.js -->
@@ -95,50 +74,41 @@
   <script>
     particlesJS("particles-js", {
       "particles": {
-        "number": {
-          "value": 50,
-          "density": {
-            "enable": true,
-            "value_area": 800
-          }
-        },
-        "shape": {
-          "type": "image",
-          "image": {
-            "src": "orange-icon.png",  // 您上傳的柑橘小icon
-            "width": 50,
-            "height": 50
-          }
-        },
-        "size": {
-          "value": 20,
-          "random": true
-        },
-        "move": {
-          "enable": true,
-          "speed": 2,
-          "direction": "none",
-          "random": true,
-          "straight": false,
-          "out_mode": "out"
-        }
+        "number": { "value": 50, "density": { "enable": true, "value_area": 800 }},
+        "shape": { "type": "image", "image": { "src": "orange-icon.png", "width": 50, "height": 50 }},
+        "size": { "value": 20, "random": true },
+        "move": { "enable": true, "speed": 2, "direction": "none", "random": true, "straight": false, "out_mode": "out" }
       },
       "interactivity": {
         "detect_on": "canvas",
-        "events": {
-          "onhover": {
-            "enable": true,
-            "mode": "repulse"
-          },
-          "onclick": {
-            "enable": true,
-            "mode": "push"
-          },
-          "resize": true
-        }
+        "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }
       },
       "retina_detect": true
     });
+
+    // 自動連播+循環Playlist
+    const playlist = [
+      "TS%20Song%20Remix%201.0%20%281%29.mp3",
+      "TS%20Song%20Remix%202.0%20%281%29.mp3"
+    ];
+
+    const audioPlayer = document.getElementById('audio-player');
+    let currentTrack = 0;
+
+    function playTrack(index) {
+      audioPlayer.src = playlist[index];
+      audioPlayer.play();
+    }
+
+    audioPlayer.addEventListener('ended', () => {
+      currentTrack = (currentTrack + 1) % playlist.length; // Loop番頭
+      playTrack(currentTrack);
+    });
+
+    // 網頁一Load即開始
+    window.onload = function() {
+      playTrack(currentTrack);
+    };
   </script>
 </body>
 </html>
